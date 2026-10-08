@@ -10,10 +10,14 @@ El sistema permite gestionar el stock de productos y las operaciones de ventas, 
 
 ### Entidades principales
 
-- **Producto:** código, nombre, categoría, precio, stock disponible.
+- **Producto:** código, nombre, categoría, precio, stock disponible y proveedor principal.
 - **Cliente:** datos personales y de contacto.
 - **Venta:** fecha, cliente, detalle de productos vendidos, total.
 - **Usuario:** credenciales para acceso al sistema.
+- **Proveedor:** nombre o razón social, teléfono, email, dirección y estado activo.
+- **Calificacion:** venta asociada, puntuación de 1 a 5, comentario opcional y fecha.
+
+Cliente, Proveedor y Usuario serán clases independientes. Cada producto tendrá un proveedor principal; un proveedor podrá suministrar varios productos.
 
 ---
 
@@ -32,12 +36,26 @@ El sistema busca:
 - Alta de nuevos productos con stock inicial.
 - Baja de productos obsoletos o discontinuados.
 - Modificación de precios y stock.
+- Selección del proveedor principal del producto.
 
 **2. Clientes**
 
 - Alta de clientes nuevos.
 - Baja de clientes inactivos.
 - Modificación de datos de contacto.
+
+**3. Proveedores**
+
+- Alta de nuevos proveedores.
+- Baja lógica de proveedores mediante su estado activo, conservando los productos asociados.
+- Modificación de datos de contacto.
+- Consulta de proveedores y sus productos asociados.
+
+### Calificación post compra
+
+- Registro de la opinión del cliente sobre la compra completa, asociada a una venta existente.
+- Puntuación entera de 1 a 5 y comentario opcional.
+- Cada venta podrá tener como máximo una calificación, cargada por el usuario del sistema a partir de la opinión del cliente.
 
 ---
 
