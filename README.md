@@ -6,7 +6,7 @@
 
 Aplicación de escritorio desarrollada en Windows Forms con conexión a base de datos mediante Entity Framework Core.
 
-El sistema permite gestionar el stock de productos y las operaciones de ventas, organizando la información en capas con una biblioteca de clases.
+El sistema permite gestionar el stock de productos y las operaciones de ventas, al estilo de un marketplace. Organizando la información en capas con una biblioteca de clases.
 
 ### Entidades principales
 
