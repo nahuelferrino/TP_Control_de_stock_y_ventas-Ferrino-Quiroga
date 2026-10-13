@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compilar solución",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "StockVentas.sln"],
+      "problemMatcher": "$msCompile",
+      "group": { "kind": "build", "isDefault": true }
+    },
+    {
+      "label": "Restaurar herramienta EF",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["tool", "restore"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Actualizar base de datos",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["ef", "database", "update", "--project", "src/StockVentas.Datos"],
+      "dependsOn": "Restaurar herramienta EF",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Ejecutar WinForms (Windows)",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["run", "--project", "src/StockVentas.WinForms"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Verificar ABM y persistencia",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["run", "--project", "tests/StockVentas.Pruebas"],
+      "problemMatcher": "$msCompile",
+      "group": "test"
+    }
+  ]
+}

@@ -95,3 +95,39 @@ El sistema está organizado en capas siguiendo buenas prácticas de arquitectura
 - La información puede ser consultada
 
 ---
+
+### Etapa 2 — Primer prototipo funcional
+
+El prototipo está desarrollado en C# con .NET 8 y Entity Framework Core 8, usando SQLite.
+
+- **Productos:** alta, consulta y búsqueda, modificación y baja lógica. Incluye selección de proveedor y validación de códigos únicos, precios y stock.
+- **Proveedores:** alta, consulta, modificación y baja lógica desde una ventana independiente.
+- **Biblioteca de clases (`StockVentas.Datos`):** los siete modelos del diagrama, contexto, repositorios, servicios y migración inicial.
+- **Aplicación (`StockVentas.WinForms`):** formularios de productos y proveedores. Al iniciar aplica las migraciones pendientes y conserva los datos entre ejecuciones.
+
+Las pantallas de clientes, ventas, usuarios, calificaciones y reportes quedan para las próximas etapas. Sus modelos y relaciones ya están definidos.
+
+#### Ejecución desde VS Code
+
+Se requiere **Windows y el SDK de .NET 8** para ejecutar WinForms. Desde la terminal del repositorio:
+
+```shell
+dotnet restore StockVentas.sln
+dotnet tool restore
+dotnet ef database update --project src/StockVentas.Datos
+dotnet run --project src/StockVentas.WinForms
+```
+
+También se puede compilar con `Ctrl+Shift+B` y ejecutar con `F5` usando las tareas incluidas en `.vscode`.
+
+La base se guarda por defecto en `%LOCALAPPDATA%\StockVentas\stockventas.db`. Se puede elegir otra ruta mediante `STOCKVENTAS_DB_PATH`. Los archivos de la base no se suben al repositorio; se incluyen las migraciones para recrearla.
+
+Para verificar el ABM y la persistencia con una base SQLite temporal:
+
+```shell
+dotnet run --project tests/StockVentas.Pruebas
+```
+
+La biblioteca, las migraciones y estas pruebas también pueden ejecutarse en macOS. La interfaz WinForms requiere Windows.
+
+Ver la [guía de la Etapa 2](docs/Etapa2.md) para el recorrido de prueba, las migraciones y la organización del código.

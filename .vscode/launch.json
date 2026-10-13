@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Stock y Ventas (Windows)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "Compilar solución",
+      "program": "${workspaceFolder}/src/StockVentas.WinForms/bin/Debug/net8.0-windows/StockVentas.WinForms.dll",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole"
+    }
+  ]
+}
