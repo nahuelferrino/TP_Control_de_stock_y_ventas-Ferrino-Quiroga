@@ -233,7 +233,7 @@ public class ProductosForm : Form
         public decimal Precio => Producto.Precio;
         public int StockDisponible => Producto.StockDisponible;
         public int StockMinimo => Producto.StockMinimo;
-        public string Proveedor => Producto.Proveedor.Nombre;
+        public string Proveedor => Producto.Proveedor?.Nombre ?? "";
         public string Estado => Producto.Activo ? "Activo" : "Inactivo";
         public ProductoFila(Producto producto) => Producto = producto;
     }
