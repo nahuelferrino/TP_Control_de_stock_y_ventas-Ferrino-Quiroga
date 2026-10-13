@@ -102,7 +102,7 @@ El prototipo está desarrollado en C# con .NET 8 y Entity Framework Core 8, usan
 
 - **Productos:** alta, consulta y búsqueda, modificación y baja lógica. Incluye selección de proveedor y validación de códigos únicos, precios y stock.
 - **Proveedores:** alta, consulta, modificación y baja lógica desde una ventana independiente.
-- **Biblioteca de clases (`StockVentas.Datos`):** los siete modelos del diagrama, contexto, repositorios, servicios y migración inicial.
+- **Biblioteca de clases (`AccesoDatos`):** los siete modelos del diagrama, contexto, repositorios, servicios y migración inicial.
 - **Aplicación (`StockVentas.WinForms`):** formularios de productos y proveedores. Al iniciar aplica las migraciones pendientes y conserva los datos entre ejecuciones.
 
 Las pantallas de clientes, ventas, usuarios, calificaciones y reportes quedan para las próximas etapas. Sus modelos y relaciones ya están definidos.
@@ -114,7 +114,7 @@ Se requiere **Windows y el SDK de .NET 8** para ejecutar WinForms. Desde la term
 ```shell
 dotnet restore StockVentas.sln
 dotnet tool restore
-dotnet ef database update --project src/StockVentas.Datos
+dotnet ef database update --project src/AccesoDatos
 dotnet run --project src/StockVentas.WinForms
 ```
 

@@ -1,6 +1,6 @@
-using StockVentas.Datos.Contexto;
-using StockVentas.Datos.Repositorios;
-using StockVentas.Datos.Servicios;
+using AccesoDatos.Contexto;
+using AccesoDatos.Repositorios;
+using AccesoDatos.Servicios;
 using StockVentas.WinForms.Formularios;
 
 namespace StockVentas.WinForms;

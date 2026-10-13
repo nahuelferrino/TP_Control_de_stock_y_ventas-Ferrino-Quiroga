@@ -3,11 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StockVentas.Datos.Contexto;
+using AccesoDatos.Contexto;
 
 #nullable disable
 
-namespace StockVentas.Datos.Migrations
+namespace AccesoDatos.Migrations
 {
     [DbContext(typeof(StockVentasDbContext))]
     partial class StockVentasDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace StockVentas.Datos.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.32");
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Calificacion", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Calificacion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace StockVentas.Datos.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Cliente", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Cliente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace StockVentas.Datos.Migrations
                     b.ToTable("Clientes", (string)null);
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.DetalleVenta", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.DetalleVenta", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,7 +114,7 @@ namespace StockVentas.Datos.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Producto", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Producto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,7 +168,7 @@ namespace StockVentas.Datos.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Proveedor", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Proveedor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -202,7 +202,7 @@ namespace StockVentas.Datos.Migrations
                     b.ToTable("Proveedores", (string)null);
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Usuario", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -229,7 +229,7 @@ namespace StockVentas.Datos.Migrations
                     b.ToTable("Usuarios", (string)null);
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Venta", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Venta", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -253,26 +253,26 @@ namespace StockVentas.Datos.Migrations
                     b.ToTable("Ventas", (string)null);
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Calificacion", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Calificacion", b =>
                 {
-                    b.HasOne("StockVentas.Datos.Modelos.Venta", "Venta")
+                    b.HasOne("AccesoDatos.Modelos.Venta", "Venta")
                         .WithOne("Calificacion")
-                        .HasForeignKey("StockVentas.Datos.Modelos.Calificacion", "VentaId")
+                        .HasForeignKey("AccesoDatos.Modelos.Calificacion", "VentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Venta");
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.DetalleVenta", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.DetalleVenta", b =>
                 {
-                    b.HasOne("StockVentas.Datos.Modelos.Producto", "Producto")
+                    b.HasOne("AccesoDatos.Modelos.Producto", "Producto")
                         .WithMany("DetallesVenta")
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("StockVentas.Datos.Modelos.Venta", "Venta")
+                    b.HasOne("AccesoDatos.Modelos.Venta", "Venta")
                         .WithMany("Detalles")
                         .HasForeignKey("VentaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -283,9 +283,9 @@ namespace StockVentas.Datos.Migrations
                     b.Navigation("Venta");
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Producto", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Producto", b =>
                 {
-                    b.HasOne("StockVentas.Datos.Modelos.Proveedor", "Proveedor")
+                    b.HasOne("AccesoDatos.Modelos.Proveedor", "Proveedor")
                         .WithMany("Productos")
                         .HasForeignKey("ProveedorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -294,15 +294,15 @@ namespace StockVentas.Datos.Migrations
                     b.Navigation("Proveedor");
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Venta", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Venta", b =>
                 {
-                    b.HasOne("StockVentas.Datos.Modelos.Cliente", "Cliente")
+                    b.HasOne("AccesoDatos.Modelos.Cliente", "Cliente")
                         .WithMany("Ventas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("StockVentas.Datos.Modelos.Usuario", "Usuario")
+                    b.HasOne("AccesoDatos.Modelos.Usuario", "Usuario")
                         .WithMany("Ventas")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -313,27 +313,27 @@ namespace StockVentas.Datos.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Cliente", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Cliente", b =>
                 {
                     b.Navigation("Ventas");
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Producto", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Producto", b =>
                 {
                     b.Navigation("DetallesVenta");
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Proveedor", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Proveedor", b =>
                 {
                     b.Navigation("Productos");
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Usuario", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Usuario", b =>
                 {
                     b.Navigation("Ventas");
                 });
 
-            modelBuilder.Entity("StockVentas.Datos.Modelos.Venta", b =>
+            modelBuilder.Entity("AccesoDatos.Modelos.Venta", b =>
                 {
                     b.Navigation("Calificacion");
 

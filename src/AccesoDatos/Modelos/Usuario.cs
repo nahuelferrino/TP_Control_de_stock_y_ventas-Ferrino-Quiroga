@@ -1,4 +1,4 @@
-namespace StockVentas.Datos.Modelos;
+namespace AccesoDatos.Modelos;
 
 public class Usuario
 {

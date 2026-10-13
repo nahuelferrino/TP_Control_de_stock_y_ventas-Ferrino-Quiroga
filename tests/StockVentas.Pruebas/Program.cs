@@ -1,9 +1,9 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using StockVentas.Datos.Contexto;
-using StockVentas.Datos.Modelos;
-using StockVentas.Datos.Repositorios;
-using StockVentas.Datos.Servicios;
+using AccesoDatos.Contexto;
+using AccesoDatos.Modelos;
+using AccesoDatos.Repositorios;
+using AccesoDatos.Servicios;
 
 namespace StockVentas.Pruebas;
 

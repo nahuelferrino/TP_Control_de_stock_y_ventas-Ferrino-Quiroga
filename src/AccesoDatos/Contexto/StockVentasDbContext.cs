@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using StockVentas.Datos.Modelos;
+using AccesoDatos.Modelos;
 
-namespace StockVentas.Datos.Contexto;
+namespace AccesoDatos.Contexto;
 
 public class StockVentasDbContext : DbContext
 {

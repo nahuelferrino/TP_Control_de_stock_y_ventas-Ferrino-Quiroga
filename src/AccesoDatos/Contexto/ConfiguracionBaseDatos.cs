@@ -1,7 +1,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-namespace StockVentas.Datos.Contexto;
+namespace AccesoDatos.Contexto;
 
 public static class ConfiguracionBaseDatos
 {

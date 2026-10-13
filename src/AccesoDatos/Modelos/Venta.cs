@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StockVentas.Datos.Modelos;
+namespace AccesoDatos.Modelos;
 
 public class Venta
 {

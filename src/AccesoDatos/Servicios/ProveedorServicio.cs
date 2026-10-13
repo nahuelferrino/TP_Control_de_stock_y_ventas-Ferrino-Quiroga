@@ -1,8 +1,8 @@
 using System.Net.Mail;
-using StockVentas.Datos.Modelos;
-using StockVentas.Datos.Repositorios;
+using AccesoDatos.Modelos;
+using AccesoDatos.Repositorios;
 
-namespace StockVentas.Datos.Servicios;
+namespace AccesoDatos.Servicios;
 
 public class ProveedorServicio
 {

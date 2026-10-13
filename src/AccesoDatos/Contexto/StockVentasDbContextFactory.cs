@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace StockVentas.Datos.Contexto;
+namespace AccesoDatos.Contexto;
 
 // Permite ejecutar dotnet ef sin iniciar WinForms, también desde macOS.
 public class StockVentasDbContextFactory : IDesignTimeDbContextFactory<StockVentasDbContext>

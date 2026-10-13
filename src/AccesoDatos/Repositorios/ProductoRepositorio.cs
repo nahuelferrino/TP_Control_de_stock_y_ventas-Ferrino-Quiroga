@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using StockVentas.Datos.Contexto;
-using StockVentas.Datos.Modelos;
+using AccesoDatos.Contexto;
+using AccesoDatos.Modelos;
 
-namespace StockVentas.Datos.Repositorios;
+namespace AccesoDatos.Repositorios;
 
 public class ProductoRepositorio
 {

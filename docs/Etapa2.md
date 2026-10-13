@@ -10,11 +10,11 @@ Se incluyen los siete modelos del diagrama: `Producto`, `Proveedor`, `Cliente`, 
 
 | Ubicación | Contenido |
 |---|---|
-| `src/StockVentas.Datos/Modelos` | Entidades y propiedades de navegación. Cliente, Usuario y Proveedor son independientes. |
-| `src/StockVentas.Datos/Contexto` | `DbContext`, configuración de SQLite y fábrica para las herramientas de migraciones. |
-| `src/StockVentas.Datos/Repositorios` | Consultas LINQ, altas, modificaciones y bajas mediante `SaveChanges()`. |
-| `src/StockVentas.Datos/Servicios` | Validaciones y reglas de negocio. |
-| `src/StockVentas.Datos/Migrations` | Migración inicial y snapshot generados por EF Core. |
+| `src/AccesoDatos/Modelos` | Entidades y propiedades de navegación. Cliente, Usuario y Proveedor son independientes. |
+| `src/AccesoDatos/Contexto` | `DbContext`, configuración de SQLite y fábrica para las herramientas de migraciones. |
+| `src/AccesoDatos/Repositorios` | Consultas LINQ, altas, modificaciones y bajas mediante `SaveChanges()`. |
+| `src/AccesoDatos/Servicios` | Validaciones y reglas de negocio. |
+| `src/AccesoDatos/Migrations` | Migración inicial y snapshot generados por EF Core. |
 | `src/StockVentas.WinForms` | Inicio de la aplicación y formularios escritos en C#. |
 | `tests/StockVentas.Pruebas` | Programa de pruebas de integración con SQLite real. Es un proyecto auxiliar, separado de los dos proyectos de la aplicación. |
 
@@ -32,7 +32,7 @@ Cada operación del repositorio utiliza un contexto nuevo y lo libera con `using
 dotnet restore StockVentas.sln
 dotnet tool restore
 dotnet build StockVentas.sln
-dotnet ef database update --project src/StockVentas.Datos
+dotnet ef database update --project src/AccesoDatos
 dotnet run --project src/StockVentas.WinForms
 ```
 
@@ -50,14 +50,14 @@ La migración **InitialCreate ya está incluida**. Para crear la base de un equi
 
 ```shell
 dotnet tool restore
-dotnet ef database update --project src/StockVentas.Datos
+dotnet ef database update --project src/AccesoDatos
 ```
 
 Para un cambio posterior en los modelos:
 
 ```shell
-dotnet ef migrations add NombreDelCambio --project src/StockVentas.Datos
-dotnet ef database update --project src/StockVentas.Datos
+dotnet ef migrations add NombreDelCambio --project src/AccesoDatos
+dotnet ef database update --project src/AccesoDatos
 ```
 
 No se debe crear nuevamente `InitialCreate`. Se versionan la migración, su archivo de metadatos y el snapshot. La aplicación también ejecuta `Database.Migrate()` al iniciar para aplicar las migraciones pendientes. No utiliza `EnsureCreated()`, ya que la creación y evolución del esquema se realiza mediante migraciones.
@@ -76,7 +76,7 @@ La aplicación y la herramienta de migraciones comparten esa configuración. Par
 
 ```powershell
 $env:STOCKVENTAS_DB_PATH = Join-Path $PWD "datos/stockventas.db"
-dotnet ef database update --project src/StockVentas.Datos
+dotnet ef database update --project src/AccesoDatos
 dotnet run --project src/StockVentas.WinForms
 ```
 

@@ -6,6 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/StockVentas.Datos/StockVentas.Datos.csproj" />
+    <ProjectReference Include="../../src/AccesoDatos/AccesoDatos.csproj" />
   </ItemGroup>
 </Project>

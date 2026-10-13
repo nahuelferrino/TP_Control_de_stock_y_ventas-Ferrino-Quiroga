@@ -1,5 +1,5 @@
-using StockVentas.Datos.Modelos;
-using StockVentas.Datos.Servicios;
+using AccesoDatos.Modelos;
+using AccesoDatos.Servicios;
 
 namespace StockVentas.WinForms.Formularios;
 

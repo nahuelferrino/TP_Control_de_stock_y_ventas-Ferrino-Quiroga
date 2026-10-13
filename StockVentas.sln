@@ -4,7 +4,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{922F1867-D902-42B1-A849-92DC00087DDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockVentas.Datos", "src\StockVentas.Datos\StockVentas.Datos.csproj", "{24C37693-F324-4370-A211-F71EBFC587D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoDatos", "src\AccesoDatos\AccesoDatos.csproj", "{24C37693-F324-4370-A211-F71EBFC587D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockVentas.WinForms", "src\StockVentas.WinForms\StockVentas.WinForms.csproj", "{61A62F56-05CC-4DE5-89B3-BC908B3B3A49}"
 EndProject

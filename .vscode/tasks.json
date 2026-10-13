@@ -20,7 +20,7 @@
       "label": "Actualizar base de datos",
       "type": "process",
       "command": "dotnet",
-      "args": ["ef", "database", "update", "--project", "src/StockVentas.Datos"],
+      "args": ["ef", "database", "update", "--project", "src/AccesoDatos"],
       "dependsOn": "Restaurar herramienta EF",
       "problemMatcher": "$msCompile"
     },
