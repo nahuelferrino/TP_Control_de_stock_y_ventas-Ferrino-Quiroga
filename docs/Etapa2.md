@@ -86,7 +86,7 @@ La carpeta se crea automáticamente. El archivo persiste aunque se cierre la apl
 
 1. Abrir la aplicación y presionar **Proveedores**.
 2. Crear un proveedor con nombre y, si se desea, teléfono, email y dirección.
-3. Cerrar esa ventana. En productos, ingresar código, nombre, categoría, proveedor, precio, stock y stock mínimo. Presionar **Guardar**.
+3. Cerrar esa ventana. En productos, ingresar código y nombre, seleccionar categoría y proveedor, y completar precio, stock y stock mínimo. Presionar **Guardar**.
 4. Consultar el listado y buscar por código, nombre o categoría.
 5. Seleccionar el producto, modificar precio o stock y guardar. Verificar el cambio en el listado.
 6. Cerrar completamente la aplicación y volver a abrirla. Confirmar que el producto sigue guardado.
@@ -95,6 +95,8 @@ La carpeta se crea automáticamente. El archivo persiste aunque se cierre la apl
 9. Intentar guardar un producto con código repetido, precio cero o sin proveedor: debe mostrarse un mensaje y no guardarse.
 
 El stock y el stock mínimo no admiten valores negativos. Los productos con stock menor o igual al mínimo se muestran en amarillo.
+
+La categoría se selecciona desde una lista desplegable. Las opciones iniciales son Alimentos y bebidas, Electrónica, Hogar, Indumentaria, Librería, Limpieza y Otros. También se incluyen las categorías ya guardadas, incluso las de productos inactivos. Al editar un producto se muestra su categoría actual y para guardar uno nuevo se debe elegir una opción. Esta corrección conserva el atributo de texto `Producto.Categoria` y no requiere una nueva migración.
 
 Si se da de baja a un proveedor, sus productos permanecen. Para guardar cambios en uno de esos productos se debe seleccionar un proveedor activo.
 

@@ -5,6 +5,12 @@ namespace AccesoDatos.Servicios;
 
 public class ProductoServicio
 {
+    private static readonly string[] categoriasIniciales =
+    {
+        "Alimentos y bebidas", "Electrónica", "Hogar", "Indumentaria",
+        "Librería", "Limpieza", "Otros"
+    };
+
     private readonly ProductoRepositorio productos;
     private readonly ProveedorRepositorio proveedores;
 
@@ -16,6 +22,14 @@ public class ProductoServicio
 
     public List<Producto> Consultar(string busqueda = "", bool incluirInactivos = false)
         => productos.Consultar(busqueda, incluirInactivos);
+
+    public List<string> ConsultarCategorias()
+        => categoriasIniciales.Concat(productos.ConsultarCategorias())
+            .Select(categoria => categoria.Trim())
+            .Where(categoria => categoria.Length > 0)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(categoria => categoria)
+            .ToList();
 
     public void Guardar(Producto producto)
     {

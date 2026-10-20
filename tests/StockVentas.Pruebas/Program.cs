@@ -94,6 +94,13 @@ internal static class Program
                 var otro = NuevoProducto(); otro.Codigo = " cu-001 ";
                 DebeFallar<ArgumentException>(() => productos.Guardar(otro));
             });
+            Probar("Rechazo de producto sin categoría seleccionada", () =>
+            {
+                var otro = NuevoProducto(); otro.Categoria = "";
+                DebeFallar<ArgumentException>(() => productos.Guardar(otro));
+                using var contexto = CrearContexto();
+                Verificar(contexto.Productos.Count() == 1);
+            });
             Probar("Rechazo de stock negativo", () =>
             {
                 var otro = NuevoProducto(); otro.StockDisponible = -1;
@@ -124,6 +131,13 @@ internal static class Program
                 using var contexto = CrearContexto();
                 var guardado = contexto.Productos.Single();
                 Verificar(guardado.Nombre == "Cuaderno actualizado" && guardado.StockDisponible == 8);
+            });
+            Probar("El selector incluye categorías existentes fuera de la lista inicial", () =>
+            {
+                producto.Categoria = "Repuestos";
+                productos.Guardar(producto);
+                Verificar(productos.ConsultarCategorias().Contains("Repuestos"));
+                Verificar(productoRepositorio.ObtenerPorId(producto.Id)!.Categoria == "Repuestos");
             });
             Probar("SQLite también impide códigos duplicados", () =>
             {
@@ -206,6 +220,11 @@ internal static class Program
                 var venta = contexto.Ventas.Include(v => v.Detalles).ThenInclude(d => d.Producto).Single();
                 Verificar(!venta.Detalles.Single().Producto.Activo && venta.Total == 25m);
                 Verificar(productos.Consultar().Count == 0 && productos.Consultar(incluirInactivos: true).Count == 1);
+            });
+            Probar("Las categorías de productos inactivos siguen disponibles al consultar", () =>
+            {
+                Verificar(productos.Consultar().Count == 0);
+                Verificar(productos.ConsultarCategorias().Contains("Repuestos"));
             });
             Probar("No se puede modificar un producto dado de baja", () =>
                 DebeFallar<InvalidOperationException>(() => productos.Guardar(producto)));

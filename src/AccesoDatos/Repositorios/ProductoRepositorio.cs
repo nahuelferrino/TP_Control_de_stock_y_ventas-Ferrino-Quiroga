@@ -35,6 +35,13 @@ public class ProductoRepositorio
         return contexto.Productos.AsNoTracking().Include(p => p.Proveedor).FirstOrDefault(p => p.Id == id);
     }
 
+    public List<string> ConsultarCategorias()
+    {
+        using var contexto = crearContexto();
+        // Incluir también las categorías de productos inactivos para conservarlas.
+        return contexto.Productos.Select(p => p.Categoria).Distinct().ToList();
+    }
+
     public bool ExisteCodigo(string codigo, int excluirId = 0)
     {
         using var contexto = crearContexto();

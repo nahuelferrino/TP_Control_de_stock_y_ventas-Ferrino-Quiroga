@@ -9,7 +9,7 @@ public class ProductosForm : Form
     private readonly ProveedorServicio proveedores;
     private readonly TextBox codigo = new() { MaxLength = 30 };
     private readonly TextBox nombre = new() { MaxLength = 100 };
-    private readonly TextBox categoria = new() { MaxLength = 60 };
+    private readonly ComboBox categoria = new() { DropDownStyle = ComboBoxStyle.DropDownList };
     private readonly ComboBox proveedor = new() { DropDownStyle = ComboBoxStyle.DropDownList };
     private readonly NumericUpDown precio = new() { DecimalPlaces = 2, Maximum = 999999999.99m, ThousandsSeparator = true };
     private readonly NumericUpDown stock = new() { Maximum = int.MaxValue, ThousandsSeparator = true };
@@ -110,10 +110,20 @@ public class ProductosForm : Form
 
         Load += (_, _) => ElementosInterfaz.Ejecutar(this, () =>
         {
+            CargarCategorias();
             CargarProveedores();
             CargarProductos();
             NuevoProducto();
         });
+    }
+
+    private void CargarCategorias(string? seleccionar = null)
+    {
+        categoria.DataSource = productos.ConsultarCategorias();
+        categoria.SelectedIndex = -1;
+        if (seleccionar is not null)
+            categoria.SelectedItem = categoria.Items.Cast<string>().FirstOrDefault(opcion =>
+                string.Equals(opcion, seleccionar.Trim(), StringComparison.OrdinalIgnoreCase));
     }
 
     private void CargarProveedores(int? seleccionarId = null)
@@ -147,6 +157,7 @@ public class ProductosForm : Form
 
     private void ConsultarProductos() => ElementosInterfaz.Ejecutar(this, () =>
     {
+        CargarCategorias();
         CargarProductos();
         NuevoProducto();
     });
@@ -156,7 +167,7 @@ public class ProductosForm : Form
         productoId = 0;
         codigo.Clear();
         nombre.Clear();
-        categoria.Clear();
+        categoria.SelectedIndex = -1;
         precio.Value = 0;
         stock.Value = 0;
         stockMinimo.Value = 0;
@@ -174,7 +185,7 @@ public class ProductosForm : Form
         productoId = producto.Id;
         codigo.Text = producto.Codigo;
         nombre.Text = producto.Nombre;
-        categoria.Text = producto.Categoria;
+        CargarCategorias(producto.Categoria);
         precio.Value = producto.Precio;
         stock.Value = producto.StockDisponible;
         stockMinimo.Value = producto.StockMinimo;
@@ -191,7 +202,7 @@ public class ProductosForm : Form
             Id = productoId,
             Codigo = codigo.Text,
             Nombre = nombre.Text,
-            Categoria = categoria.Text,
+            Categoria = categoria.SelectedItem as string ?? string.Empty,
             Precio = precio.Value,
             StockDisponible = (int)stock.Value,
             StockMinimo = (int)stockMinimo.Value,

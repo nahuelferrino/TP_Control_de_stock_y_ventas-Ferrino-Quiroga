@@ -36,7 +36,7 @@ El sistema busca:
 - Alta de nuevos productos con stock inicial.
 - Baja de productos obsoletos o discontinuados.
 - Modificación de precios y stock.
-- Selección del proveedor principal del producto.
+- Selección de categoría desde una lista desplegable y del proveedor principal del producto.
 
 **2. Clientes**
 
@@ -100,7 +100,7 @@ El sistema está organizado en capas siguiendo buenas prácticas de arquitectura
 
 El prototipo está desarrollado en C# con .NET 8 y Entity Framework Core 8, usando SQLite.
 
-- **Productos:** alta, consulta y búsqueda, modificación y baja lógica. Incluye selección de proveedor y validación de códigos únicos, precios y stock.
+- **Productos:** alta, consulta y búsqueda, modificación y baja lógica. Incluye selección de categoría y proveedor, y validación de códigos únicos, precios y stock.
 - **Proveedores:** alta, consulta, modificación y baja lógica desde una ventana independiente.
 - **Biblioteca de clases (`AccesoDatos`):** los siete modelos del diagrama, contexto, repositorios, servicios y migración inicial.
 - **Aplicación (`StockVentas.WinForms`):** formularios de productos y proveedores. Al iniciar aplica las migraciones pendientes y conserva los datos entre ejecuciones.
