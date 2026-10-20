@@ -1,0 +1,92 @@
+PROMPTS UTILIZADOS — TP DE STOCK Y VENTAS
+======================================
+
+Selección de mensajes reales enviados por el grupo a la IA en esta conversación.
+No es una transcripción completa. Los apartados marcados como extractos conservan
+una parte textual del mensaje original. No se presentan instrucciones reconstruidas
+o sugeridas como si hubieran sido utilizadas.
+
+1. ALCANCE INICIAL — EXTRACTO DEL PRIMER MENSAJE
+-----------------------------------------------
+Desarrollar una aplicación de escritorio en Windows Forms conectada a una base de datos utilizando Entity Framework Core y organizada en capas mediante una biblioteca de clases. El proyecto debe permitir realizar operaciones CRUD (Altas, Bajas, Modificaciones, Consultas) sobre un dominio elegido por el grupo y generar reportes básicos.
+
+Ahora quiero que me ayudes con el paso 3 y recien cuando terminemos con eso sigamos con el paso 4. PERO UNICAMENTE CUANDO YO TE LO DIGA, quiero tenerlo bien completo para una entrega eficiente y la menor cantidad de correcciones posibles. Empezamos?
+
+2. INTEGRACIÓN DE CAPAS
+----------------------
+te salio genial. Ahora sigamos con el siguiente paso
+
+3. RESUMEN DE LA EXPLICACIÓN
+---------------------------
+podes hacerla mas breve aun?
+
+4. FORMATO DEL README
+--------------------
+Acomodame este readme
+
+5. PROPUESTA DE PROVEEDORES Y CALIFICACIONES
+------------------------------------------
+ver tema calificacion post Compra. y agregar clase proveedores.
+
+Podes explicarme como agregarias esto para ver si lo vemos viable? Un profesor me dijo que estaria bueno ver como implementarlo
+
+6. DISTINCIÓN ENTRE ENTIDADES
+----------------------------
+claro, aca lo estas pensando como que un proveedor o un cliente son tipos de usuarios? refiriendonos al diagrama de clases precisamente
+
+7. ACTUALIZACIÓN DE README Y DIAGRAMA
+-----------------------------------
+okay, hagamos los cambios correspondientes en el readme y el diagrama de clases entonces
+
+8. PRIMER PROTOTIPO — ETAPA 2
+-----------------------------
+Bueno chat, ahora vamos con la etapa 2 que contiene lo siguiente:
+
+Etapa 2 — Primer prototipo funcional (ABM básico)
+
+Fecha de entrega: 16-10-26
+
+Cada grupo deberá implementar una primera versión funcional del sistema que incluya:
+
+1. Conexión a base de datos mediante Entity Framework Core.
+2. Al menos una pantalla funcional en WinForms con operaciones ABM (Alta, Baja, Modificación y Consulta).
+3. Separación en proyectos:
+   - Biblioteca de Clases → modelos, contexto (DbContext) y repositorios.
+   - WinForms App → interfaz gráfica.
+4. Persistencia real en base de datos (incluyendo las migraciones correspondientes como vimos en UNIDAD 9).
+5. Repositorio actualizado en GitHub con los archivos del proyecto.
+
+Quiero que leas todo lo que hicimos y el contenido del repo denuevo y vayas haciendo lo otro, en c# todo en vscode
+
+Material enlazado en el mensaje original:
+https://docs.google.com/presentation/d/19bocjZ6iYPQnWwUTwuCWZ2nmEFNpi4S3/edit?slide=id.p12#slide=id.p12
+
+9. NOMBRE DE LA BIBLIOTECA
+-------------------------
+ahora quiero que cambies todos los StockVentas.Datos por AccesoDatos
+
+10. CORRECCIÓN RECIBIDA SOBRE CATEGORÍAS
+--------------------------------------
+bueno nos entregaron la correccion, en la misma aclara que estaria bueno que se puedan seleccionar las categorias. Me parece un acierto por parte de los profesores, Asi que si podes agregarlo te lo agradeceria, con respecto a la etapa 3 a continuacion te voy a pasar la consigna. Mejor primero haz esa correccion y despues seguimos con la proxima etapa
+
+11. SEGUNDA VERSIÓN — ETAPA 3
+-----------------------------
+genial, a continuacion te paso la consigna de la etapa 3:
+
+Etapa 3 — Reportes y mejoras.
+
+Fecha de entrega: 25-10-26
+
+Segunda versión:
+
+1. Al menos 5 reportes/consultas.
+2. Interfaz gráfica organizada y fácil de usar.
+3. Validaciones básicas (campos obligatorios, datos numéricos, etc.).
+4. Incluir prompts utilizados en un txt.
+
+12. ALCANCE ELEGIDO PARA LA ETAPA 3
+---------------------------------
+Ante la consulta de la IA sobre implementar solo reportes de productos y proveedores
+o incorporar también clientes y ventas, el grupo seleccionó esta respuesta:
+
+Incluir clientes y ventas: versión más completa

@@ -61,12 +61,13 @@ El sistema busca:
 
 ### Reportes previstos
 
-El sistema incluirá al menos 4 reportes básicos:
+El sistema incluirá al menos 5 reportes básicos:
 
 1. Listado de productos con bajo stock (alerta de reposición).
 2. Historial de ventas por cliente (detalle de compras realizadas).
 3. Ventas realizadas en un período (filtrado por fechas).
 4. Productos más vendidos (ranking de popularidad).
+5. Inventario por categoría (cantidad de productos, unidades y valor a precio de venta).
 
 ---
 
@@ -105,7 +106,7 @@ El prototipo está desarrollado en C# con .NET 8 y Entity Framework Core 8, usan
 - **Biblioteca de clases (`AccesoDatos`):** los siete modelos del diagrama, contexto, repositorios, servicios y migración inicial.
 - **Aplicación (`StockVentas.WinForms`):** formularios de productos y proveedores. Al iniciar aplica las migraciones pendientes y conserva los datos entre ejecuciones.
 
-Las pantallas de clientes, ventas, usuarios, calificaciones y reportes quedan para las próximas etapas. Sus modelos y relaciones ya están definidos.
+En la entrega de la Etapa 2 estaban pendientes las pantallas de clientes, ventas, usuarios, calificaciones y reportes, con sus modelos y relaciones definidos. La Etapa 3 incorpora clientes, ventas y reportes.
 
 #### Ejecución desde VS Code
 
@@ -131,3 +132,21 @@ dotnet run --project tests/StockVentas.Pruebas
 La biblioteca, las migraciones y estas pruebas también pueden ejecutarse en macOS. La interfaz WinForms requiere Windows.
 
 Ver la [guía de la Etapa 2](docs/Etapa2.md) para el recorrido de prueba, las migraciones y la organización del código.
+
+### Etapa 3 — Reportes y mejoras
+
+La segunda versión incorpora un **menú principal** con acceso a Productos, Proveedores, Clientes, Ventas y Reportes.
+
+- **Clientes:** alta, consulta, modificación y baja lógica, con nombre y apellido obligatorios y validación de email.
+- **Ventas:** selección de cliente y productos, cantidades enteras, total estimado y confirmación. Al guardar se comprueba el stock actual, se conservan los precios unitarios y se registra la venta junto con el descuento de stock en una sola transacción.
+- **Reportes:** cinco consultas desde una ventana común, con filtros habilitados según corresponda, totales y aviso cuando no hay resultados.
+- **Validaciones:** se mantienen las de productos y proveedores y se agregan controles de clientes, cantidades, stock, fechas y selección de filtros.
+- **Prompts:** se incluyen mensajes reales utilizados durante el trabajo en [prompts.txt](prompts.txt).
+
+Los reportes implementados son stock bajo, historial por cliente, ventas por período, productos más vendidos e inventario por categoría. Las fechas de los reportes incluyen los días completos seleccionados; los históricos conservan las compras de clientes o productos dados de baja.
+
+Esta versión funciona como una aplicación local sin inicio de sesión: las ventas quedan asociadas a un registro interno llamado `operador-local`, creado con la primera venta. Las pantallas de autenticación y calificaciones no forman parte de esta entrega.
+
+Se mantiene la biblioteca **AccesoDatos**, el proyecto **StockVentas.WinForms** y el esquema existente; esta etapa no necesita una migración adicional.
+
+Ver la [guía de la Etapa 3](docs/Etapa3.md) para los filtros, las validaciones y un recorrido de demostración con resultados esperados. Los comandos de compilación, ejecución y pruebas son los mismos de la Etapa 2.

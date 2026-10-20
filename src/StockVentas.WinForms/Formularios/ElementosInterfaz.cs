@@ -91,7 +91,7 @@ internal static class ElementosInterfaz
         catch (DbUpdateException error)
         {
             Trace.WriteLine(error);
-            MessageBox.Show(formulario, "No se pudieron guardar los cambios. Revisá que el código no esté repetido y que el proveedor siga disponible.",
+            MessageBox.Show(formulario, "No se pudieron guardar los cambios. Revisá que los datos sigan disponibles y volvé a consultar antes de reintentar.",
                 "Error al guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         catch (Exception error)

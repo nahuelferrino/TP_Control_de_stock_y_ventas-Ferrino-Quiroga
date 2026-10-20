@@ -18,7 +18,10 @@ internal static class Program
             var proveedores = new ProveedorRepositorio(ConfiguracionBaseDatos.CrearContexto);
             var productoServicio = new ProductoServicio(productos, proveedores);
             var proveedorServicio = new ProveedorServicio(proveedores);
-            Application.Run(new ProductosForm(productoServicio, proveedorServicio));
+            var clienteServicio = new ClienteServicio(new ClienteRepositorio(ConfiguracionBaseDatos.CrearContexto));
+            var ventaServicio = new VentaServicio(new VentaRepositorio(ConfiguracionBaseDatos.CrearContexto));
+            var reporteServicio = new ReporteServicio(new ReporteRepositorio(ConfiguracionBaseDatos.CrearContexto));
+            Application.Run(new PrincipalForm(productoServicio, proveedorServicio, clienteServicio, ventaServicio, reporteServicio));
         }
         catch (Exception error)
         {

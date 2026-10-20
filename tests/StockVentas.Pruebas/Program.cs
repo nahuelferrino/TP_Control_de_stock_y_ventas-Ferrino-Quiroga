@@ -8,7 +8,7 @@ using AccesoDatos.Servicios;
 namespace StockVentas.Pruebas;
 
 // Pruebas de integración: utilizan un archivo SQLite temporal, sin tocar la base del usuario.
-internal static class Program
+internal static partial class Program
 {
     private static int correctas;
     private static int fallidas;
@@ -252,6 +252,7 @@ internal static class Program
                     && contexto.Ventas.Count() == 1 && contexto.Calificaciones.Count() == 1);
                 Verificar(contexto.Database.GetAppliedMigrations().Count() == 1);
             });
+            EjecutarPruebasEtapa3(carpeta);
         }
         finally
         {

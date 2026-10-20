@@ -1,5 +1,7 @@
 # Etapa 2 — Prototipo de Stock y Ventas
 
+Esta guía describe la primera versión. Para las funciones de la segunda versión, consultar la [Etapa 3](Etapa3.md).
+
 ## Alcance
 
 El prototipo implementa el ABM de productos y una ventana de proveedores para poder asignar un proveedor principal a cada producto. Las bajas son lógicas: el registro queda con `Activo = false` y puede consultarse mediante **Mostrar inactivos**.
