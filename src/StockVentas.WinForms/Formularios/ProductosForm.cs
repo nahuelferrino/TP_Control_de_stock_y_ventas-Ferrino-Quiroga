@@ -38,25 +38,45 @@ public class ProductosForm : Form
 
         var raiz = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(20), ColumnCount = 1, RowCount = 6 };
         raiz.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 66));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 170));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 52));
         raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 48));
         raiz.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
         raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
         Controls.Add(raiz);
 
-        var cabecera = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, WrapContents = false };
-        cabecera.Controls.Add(new Label { Text = "Gestión de productos", Font = new Font(Font.FontFamily, 20, FontStyle.Bold), ForeColor = ElementosInterfaz.Azul, AutoSize = true });
-        cabecera.Controls.Add(new Label { Text = "Registrá un proveedor y luego cargá tus productos. Seleccioná una fila para modificarla.", AutoSize = true });
+        var cabecera = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            ColumnCount = 1, RowCount = 2, Margin = new Padding(0, 0, 0, 12)
+        };
+        cabecera.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        cabecera.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        cabecera.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        cabecera.Controls.Add(new Label
+        {
+            Text = "Gestión de productos", Font = new Font(Font.FontFamily, 20, FontStyle.Bold),
+            ForeColor = ElementosInterfaz.Azul, AutoSize = true, Dock = DockStyle.Fill,
+            Margin = new Padding(0, 0, 0, 8)
+        }, 0, 0);
+        cabecera.Controls.Add(new Label
+        {
+            Text = "Registrá un proveedor y luego cargá tus productos. Seleccioná una fila para modificarla.",
+            AutoSize = true, Dock = DockStyle.Fill, Margin = Padding.Empty
+        }, 0, 1);
         raiz.Controls.Add(cabecera, 0, 0);
 
-        var editor = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 4, RowCount = 4 };
-        editor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 118));
+        var editor = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            ColumnCount = 4, RowCount = 4
+        };
+        editor.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-        editor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 110));
+        editor.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-        for (var i = 0; i < 4; i++) editor.RowStyles.Add(new RowStyle(SizeType.Percent, 25));
+        for (var i = 0; i < 4; i++) editor.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         ElementosInterfaz.Campo(editor, "Código *", codigo, 0, 0);
         ElementosInterfaz.Campo(editor, "Nombre *", nombre, 2, 0);
         ElementosInterfaz.Campo(editor, "Categoría *", categoria, 0, 1);
@@ -97,7 +117,7 @@ public class ProductosForm : Form
         ElementosInterfaz.Columna(grilla, nameof(ProductoFila.Categoria), "Categoría", 110);
         ElementosInterfaz.Columna(grilla, nameof(ProductoFila.Precio), "Precio", 80, "N2");
         ElementosInterfaz.Columna(grilla, nameof(ProductoFila.StockDisponible), "Stock", 60);
-        ElementosInterfaz.Columna(grilla, nameof(ProductoFila.StockMinimo), "Mínimo", 60);
+        ElementosInterfaz.Columna(grilla, nameof(ProductoFila.StockMinimo), "Stock mínimo", 100);
         ElementosInterfaz.Columna(grilla, nameof(ProductoFila.Proveedor), "Proveedor", 135);
         ElementosInterfaz.Columna(grilla, nameof(ProductoFila.Estado), "Estado", 80);
         grilla.SelectionChanged += (_, _) =>
