@@ -34,20 +34,20 @@ public class VentasForm : Form
         AutoScaleMode = AutoScaleMode.Dpi;
         var raiz = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(20), ColumnCount = 1, RowCount = 6 };
         raiz.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 135));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 52));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         raiz.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         Controls.Add(raiz);
         raiz.Controls.Add(new Label { Text = "Registrar venta", Font = new Font(Font.FontFamily, 20, FontStyle.Bold), ForeColor = ElementosInterfaz.Azul, AutoSize = true }, 0, 0);
-        var editor = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 4, RowCount = 3 };
-        editor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 105));
+        var editor = new TableLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, ColumnCount = 4, RowCount = 3 };
+        editor.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65));
-        editor.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
+        editor.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         editor.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35));
-        for (var i = 0; i < 3; i++) editor.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / 3));
+        for (var i = 0; i < 3; i++) editor.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         ElementosInterfaz.Campo(editor, "Cliente *", cliente, 0, 0);
         ElementosInterfaz.Campo(editor, "Fecha *", fecha, 2, 0);
         ElementosInterfaz.Campo(editor, "Producto *", producto, 0, 1);
@@ -56,7 +56,7 @@ public class VentasForm : Form
         raiz.Controls.Add(editor, 0, 1);
         producto.SelectedIndexChanged += (_, _) => MostrarDisponibilidad();
 
-        var acciones = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = false };
+        var acciones = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, WrapContents = true };
         acciones.Controls.Add(ElementosInterfaz.Boton("Agregar producto", (_, _) => ElementosInterfaz.Ejecutar(this, AgregarProducto), true));
         acciones.Controls.Add(ElementosInterfaz.Boton("Retirar seleccionado", (_, _) =>
         {
@@ -72,7 +72,7 @@ public class VentasForm : Form
         ElementosInterfaz.Columna(grilla, nameof(CarritoFila.Subtotal), "Subtotal", 100, "N2");
         grilla.DataSource = carrito;
         raiz.Controls.Add(grilla, 0, 3);
-        var pie = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = false };
+        var pie = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, WrapContents = true };
         guardar = ElementosInterfaz.Boton("Confirmar venta", (_, _) => ElementosInterfaz.Ejecutar(this, GuardarVenta), true);
         pie.Controls.Add(guardar);
         pie.Controls.Add(ElementosInterfaz.Boton("Nueva venta", (_, _) =>

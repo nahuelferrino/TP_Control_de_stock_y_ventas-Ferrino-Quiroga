@@ -40,10 +40,10 @@ public class ProductosForm : Form
         raiz.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 52));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 48));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         raiz.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        raiz.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+        raiz.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         Controls.Add(raiz);
 
         var cabecera = new TableLayoutPanel
@@ -88,7 +88,7 @@ public class ProductosForm : Form
         editor.SetColumnSpan(modo, 2);
         raiz.Controls.Add(editor, 0, 1);
 
-        var acciones = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = false };
+        var acciones = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, WrapContents = true };
         acciones.Controls.Add(ElementosInterfaz.Boton("Nuevo", (_, _) => NuevoProducto()));
         guardar = ElementosInterfaz.Boton("Guardar", (_, _) => ElementosInterfaz.Ejecutar(this, GuardarProducto), true);
         baja = ElementosInterfaz.Boton("Dar de baja", (_, _) => ElementosInterfaz.Ejecutar(this, DarDeBaja));
@@ -97,7 +97,7 @@ public class ProductosForm : Form
         acciones.Controls.Add(ElementosInterfaz.Boton("Proveedores", (_, _) => ElementosInterfaz.Ejecutar(this, AbrirProveedores)));
         raiz.Controls.Add(acciones, 0, 2);
 
-        var filtros = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = false };
+        var filtros = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, WrapContents = true };
         filtros.Controls.Add(new Label { Text = "Buscar:", AutoSize = true, Margin = new Padding(0, 10, 8, 0) });
         busqueda.Margin = new Padding(0, 6, 8, 0);
         filtros.Controls.Add(busqueda);
