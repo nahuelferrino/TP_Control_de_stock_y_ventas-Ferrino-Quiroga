@@ -1,19 +1,20 @@
+using AccesoDatos.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AccesoDatos.Contexto;
 using AccesoDatos.Modelos;
 
 namespace AccesoDatos.Repositorios;
 
-public class ProductoRepositorio
+public class ProductoRepositorio : IProductoRepositorio
 {
-    private readonly Func<StockVentasDbContext> crearContexto;
+    private readonly IDbContextFactory<StockVentasDbContext> fabricaContextos;
 
-    public ProductoRepositorio(Func<StockVentasDbContext> crearContexto)
-        => this.crearContexto = crearContexto;
+    public ProductoRepositorio(IDbContextFactory<StockVentasDbContext> fabricaContextos)
+        => this.fabricaContextos = fabricaContextos;
 
     public List<Producto> Consultar(string busqueda = "", bool incluirInactivos = false)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var consulta = contexto.Productos.AsNoTracking().Include(p => p.Proveedor).AsQueryable();
         if (!incluirInactivos)
             consulta = consulta.Where(p => p.Activo);
@@ -31,33 +32,33 @@ public class ProductoRepositorio
 
     public Producto? ObtenerPorId(int id)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         return contexto.Productos.AsNoTracking().Include(p => p.Proveedor).FirstOrDefault(p => p.Id == id);
     }
 
     public List<string> ConsultarCategorias()
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         // Incluir también las categorías de productos inactivos para conservarlas.
         return contexto.Productos.Select(p => p.Categoria).Distinct().ToList();
     }
 
     public bool ExisteCodigo(string codigo, int excluirId = 0)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         return contexto.Productos.Any(p => p.Codigo == codigo && p.Id != excluirId);
     }
 
     public void Agregar(Producto producto)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         contexto.Productos.Add(producto);
         contexto.SaveChanges();
     }
 
     public void Modificar(Producto producto)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var existente = contexto.Productos.Find(producto.Id)
             ?? throw new InvalidOperationException("El producto ya no existe.");
         if (!existente.Activo)
@@ -75,7 +76,7 @@ public class ProductoRepositorio
 
     public void DarDeBaja(int id)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var producto = contexto.Productos.Find(id)
             ?? throw new InvalidOperationException("El producto ya no existe.");
         if (!producto.Activo)

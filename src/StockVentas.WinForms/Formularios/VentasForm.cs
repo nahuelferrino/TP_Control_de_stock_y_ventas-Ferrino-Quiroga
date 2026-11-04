@@ -1,15 +1,15 @@
 using System.ComponentModel;
 using AccesoDatos.Modelos;
-using AccesoDatos.Servicios;
+using AccesoDatos.Interfaces;
 using AccesoDatos.Ventas;
 
 namespace StockVentas.WinForms.Formularios;
 
 public class VentasForm : Form
 {
-    private readonly ProductoServicio productos;
-    private readonly ClienteServicio clientes;
-    private readonly VentaServicio ventas;
+    private readonly IProductoServicio productos;
+    private readonly IClienteServicio clientes;
+    private readonly IVentaServicio ventas;
     private readonly ComboBox cliente = new() { DropDownStyle = ComboBoxStyle.DropDownList };
     private readonly DateTimePicker fecha = new() { Format = DateTimePickerFormat.Custom, CustomFormat = "dd/MM/yyyy HH:mm" };
     private readonly ComboBox producto = new() { DropDownStyle = ComboBoxStyle.DropDownList };
@@ -22,7 +22,7 @@ public class VentasForm : Form
     private readonly Button guardar;
     private List<Producto> productosDisponibles = new();
 
-    public VentasForm(ProductoServicio productos, ClienteServicio clientes, VentaServicio ventas)
+    public VentasForm(IProductoServicio productos, IClienteServicio clientes, IVentaServicio ventas)
     {
         this.productos = productos; this.clientes = clientes; this.ventas = ventas;
         Text = "Stock y Ventas — Registrar venta";

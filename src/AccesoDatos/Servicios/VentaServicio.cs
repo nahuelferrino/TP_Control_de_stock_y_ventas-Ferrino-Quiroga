@@ -1,14 +1,14 @@
 using AccesoDatos.Modelos;
-using AccesoDatos.Repositorios;
+using AccesoDatos.Interfaces;
 using AccesoDatos.Ventas;
 
 namespace AccesoDatos.Servicios;
 
-public class VentaServicio
+public class VentaServicio : IVentaServicio
 {
-    private readonly VentaRepositorio ventas;
+    private readonly IVentaRepositorio ventas;
 
-    public VentaServicio(VentaRepositorio ventas) => this.ventas = ventas;
+    public VentaServicio(IVentaRepositorio ventas) => this.ventas = ventas;
 
     public Venta Registrar(int clienteId, DateTime fecha, IReadOnlyCollection<LineaVenta> lineas)
     {

@@ -1,19 +1,20 @@
+using AccesoDatos.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AccesoDatos.Contexto;
 using AccesoDatos.Reportes;
 
 namespace AccesoDatos.Repositorios;
 
-public class ReporteRepositorio
+public class ReporteRepositorio : IReporteRepositorio
 {
-    private readonly Func<StockVentasDbContext> crearContexto;
+    private readonly IDbContextFactory<StockVentasDbContext> fabricaContextos;
 
-    public ReporteRepositorio(Func<StockVentasDbContext> crearContexto)
-        => this.crearContexto = crearContexto;
+    public ReporteRepositorio(IDbContextFactory<StockVentasDbContext> fabricaContextos)
+        => this.fabricaContextos = fabricaContextos;
 
     public List<StockBajoFila> StockBajo()
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         return contexto.Productos.AsNoTracking()
             .Where(p => p.Activo && p.StockDisponible <= p.StockMinimo)
             .OrderBy(p => p.StockDisponible).ThenBy(p => p.Nombre)
@@ -26,7 +27,7 @@ public class ReporteRepositorio
 
     public List<HistorialClienteFila> HistorialCliente(int clienteId, DateTime desde, DateTime hastaExclusiva)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         if (!contexto.Clientes.Any(c => c.Id == clienteId))
             throw new ArgumentException("El cliente seleccionado ya no existe.");
         return contexto.DetallesVenta.AsNoTracking()
@@ -41,7 +42,7 @@ public class ReporteRepositorio
 
     public List<VentaPeriodoFila> VentasPeriodo(DateTime desde, DateTime hastaExclusiva)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var ventas = contexto.Ventas.AsNoTracking().Include(v => v.Cliente).Include(v => v.Detalles)
             .Where(v => v.Fecha >= desde && v.Fecha < hastaExclusiva)
             .OrderByDescending(v => v.Fecha).ThenByDescending(v => v.Id).ToList();
@@ -55,7 +56,7 @@ public class ReporteRepositorio
 
     public List<ProductoMasVendidoFila> ProductosMasVendidos(DateTime desde, DateTime hastaExclusiva)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var detalles = contexto.DetallesVenta.AsNoTracking()
             .Where(d => d.Venta.Fecha >= desde && d.Venta.Fecha < hastaExclusiva)
             .Select(d => new
@@ -71,7 +72,7 @@ public class ReporteRepositorio
 
     public List<InventarioCategoriaFila> InventarioCategoria()
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var productos = contexto.Productos.AsNoTracking().Where(p => p.Activo)
             .Select(p => new { p.Categoria, p.StockDisponible, p.Precio }).ToList();
         return productos.GroupBy(p => p.Categoria.Trim(), StringComparer.OrdinalIgnoreCase)

@@ -5,9 +5,9 @@ namespace AccesoDatos.Contexto;
 
 public static class ConfiguracionBaseDatos
 {
-    public static void Inicializar()
+    public static void Inicializar(IDbContextFactory<StockVentasDbContext> fabrica)
     {
-        using var contexto = CrearContexto();
+        using var contexto = fabrica.CreateDbContext();
         contexto.Database.Migrate();
     }
 
@@ -27,14 +27,20 @@ public static class ConfiguracionBaseDatos
 
     public static StockVentasDbContext CrearContexto()
     {
-        Directory.CreateDirectory(Path.GetDirectoryName(RutaArchivo)!);
+        var opciones = new DbContextOptionsBuilder<StockVentasDbContext>();
+        Configurar(opciones);
+        return new StockVentasDbContext(opciones.Options);
+    }
+
+    public static void Configurar(DbContextOptionsBuilder opciones)
+    {
+        var ruta = RutaArchivo;
+        Directory.CreateDirectory(Path.GetDirectoryName(ruta)!);
         var conexion = new SqliteConnectionStringBuilder
         {
-            DataSource = RutaArchivo,
+            DataSource = ruta,
             ForeignKeys = true
         };
-        var opciones = new DbContextOptionsBuilder<StockVentasDbContext>()
-            .UseSqlite(conexion.ToString()).Options;
-        return new StockVentasDbContext(opciones);
+        opciones.UseSqlite(conexion.ToString());
     }
 }

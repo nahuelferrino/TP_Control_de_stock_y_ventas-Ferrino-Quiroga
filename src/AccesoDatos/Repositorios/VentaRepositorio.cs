@@ -1,3 +1,4 @@
+using AccesoDatos.Interfaces;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using AccesoDatos.Contexto;
@@ -6,16 +7,16 @@ using AccesoDatos.Ventas;
 
 namespace AccesoDatos.Repositorios;
 
-public class VentaRepositorio
+public class VentaRepositorio : IVentaRepositorio
 {
-    private readonly Func<StockVentasDbContext> crearContexto;
+    private readonly IDbContextFactory<StockVentasDbContext> fabricaContextos;
 
-    public VentaRepositorio(Func<StockVentasDbContext> crearContexto)
-        => this.crearContexto = crearContexto;
+    public VentaRepositorio(IDbContextFactory<StockVentasDbContext> fabricaContextos)
+        => this.fabricaContextos = fabricaContextos;
 
     public Venta Registrar(int clienteId, DateTime fecha, IReadOnlyCollection<LineaVenta> lineas)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         // El control de stock y el guardado forman una sola operación de escritura.
         using var transaccion = contexto.Database.BeginTransaction();
         var cliente = contexto.Clientes.Find(clienteId);

@@ -1,19 +1,20 @@
+using AccesoDatos.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AccesoDatos.Contexto;
 using AccesoDatos.Modelos;
 
 namespace AccesoDatos.Repositorios;
 
-public class ProveedorRepositorio
+public class ProveedorRepositorio : IProveedorRepositorio
 {
-    private readonly Func<StockVentasDbContext> crearContexto;
+    private readonly IDbContextFactory<StockVentasDbContext> fabricaContextos;
 
-    public ProveedorRepositorio(Func<StockVentasDbContext> crearContexto)
-        => this.crearContexto = crearContexto;
+    public ProveedorRepositorio(IDbContextFactory<StockVentasDbContext> fabricaContextos)
+        => this.fabricaContextos = fabricaContextos;
 
     public List<Proveedor> Consultar(bool incluirInactivos = false)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var consulta = contexto.Proveedores.AsNoTracking().AsQueryable();
         if (!incluirInactivos)
             consulta = consulta.Where(p => p.Activo);
@@ -22,20 +23,20 @@ public class ProveedorRepositorio
 
     public Proveedor? ObtenerPorId(int id)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         return contexto.Proveedores.AsNoTracking().FirstOrDefault(p => p.Id == id);
     }
 
     public void Agregar(Proveedor proveedor)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         contexto.Proveedores.Add(proveedor);
         contexto.SaveChanges();
     }
 
     public void Modificar(Proveedor proveedor)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var existente = contexto.Proveedores.Find(proveedor.Id)
             ?? throw new InvalidOperationException("El proveedor ya no existe.");
         if (!existente.Activo)
@@ -49,7 +50,7 @@ public class ProveedorRepositorio
 
     public void DarDeBaja(int id)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var proveedor = contexto.Proveedores.Find(id)
             ?? throw new InvalidOperationException("El proveedor ya no existe.");
         if (!proveedor.Activo)

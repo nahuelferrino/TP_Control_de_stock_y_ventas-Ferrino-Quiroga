@@ -1,4 +1,7 @@
+using AccesoDatos.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AccesoDatos.Configuracion;
 using AccesoDatos.Contexto;
 using AccesoDatos.Modelos;
 using AccesoDatos.Repositorios;
@@ -11,14 +14,18 @@ internal static partial class Program
 {
     private static void EjecutarPruebasEtapa3(string carpeta)
     {
-        var opciones = new DbContextOptionsBuilder<StockVentasDbContext>()
-            .UseSqlite($"Data Source={Path.Combine(carpeta, "etapa3.db")};Foreign Keys=True").Options;
-        StockVentasDbContext CrearContexto() => new(opciones);
-        var clientes = new ClienteServicio(new ClienteRepositorio(CrearContexto));
-        var proveedores = new ProveedorServicio(new ProveedorRepositorio(CrearContexto));
-        var productos = new ProductoServicio(new ProductoRepositorio(CrearContexto), new ProveedorRepositorio(CrearContexto));
-        var ventas = new VentaServicio(new VentaRepositorio(CrearContexto));
-        var reportes = new ReporteServicio(new ReporteRepositorio(CrearContexto));
+        var registros = new ServiceCollection();
+        registros.AgregarAccesoDatos(opciones => opciones
+            .UseSqlite($"Data Source={Path.Combine(carpeta, "etapa3.db")};Foreign Keys=True"));
+        using var contenedor = registros.BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
+        using var ambito = contenedor.CreateScope();
+        var fabrica = contenedor.GetRequiredService<IDbContextFactory<StockVentasDbContext>>();
+        StockVentasDbContext CrearContexto() => fabrica.CreateDbContext();
+        var clientes = ambito.ServiceProvider.GetRequiredService<IClienteServicio>();
+        var proveedores = ambito.ServiceProvider.GetRequiredService<IProveedorServicio>();
+        var productos = ambito.ServiceProvider.GetRequiredService<IProductoServicio>();
+        var ventas = ambito.ServiceProvider.GetRequiredService<IVentaServicio>();
+        var reportes = ambito.ServiceProvider.GetRequiredService<IReporteServicio>();
         var ana = new Cliente { Nombre = " Ana ", Apellido = " Pérez ", Email = "ana@example.com" };
         var bruno = new Cliente { Nombre = "Bruno", Apellido = "Quiroga" };
         var proveedor = new Proveedor { Nombre = "Distribuidora" };

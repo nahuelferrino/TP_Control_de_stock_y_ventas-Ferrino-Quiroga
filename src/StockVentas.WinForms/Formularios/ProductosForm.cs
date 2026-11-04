@@ -1,12 +1,13 @@
 using AccesoDatos.Modelos;
-using AccesoDatos.Servicios;
+using AccesoDatos.Interfaces;
 
 namespace StockVentas.WinForms.Formularios;
 
 public class ProductosForm : Form
 {
-    private readonly ProductoServicio productos;
-    private readonly ProveedorServicio proveedores;
+    private readonly IProductoServicio productos;
+    private readonly IProveedorServicio proveedores;
+    private readonly NavegacionFormularios navegacion;
     private readonly TextBox codigo = new() { MaxLength = 30 };
     private readonly TextBox nombre = new() { MaxLength = 100 };
     private readonly ComboBox categoria = new() { DropDownStyle = ComboBoxStyle.DropDownList };
@@ -24,10 +25,11 @@ public class ProductosForm : Form
     private int productoId;
     private bool actualizandoGrilla;
 
-    public ProductosForm(ProductoServicio productos, ProveedorServicio proveedores)
+    public ProductosForm(IProductoServicio productos, IProveedorServicio proveedores, NavegacionFormularios navegacion)
     {
         this.productos = productos;
         this.proveedores = proveedores;
+        this.navegacion = navegacion;
         Text = "Stock y Ventas — Productos";
         StartPosition = FormStartPosition.CenterScreen;
         MinimumSize = new Size(1000, 670);
@@ -249,8 +251,7 @@ public class ProductosForm : Form
     private void AbrirProveedores()
     {
         var proveedorId = proveedor.SelectedItem is Proveedor seleccionado ? seleccionado.Id : (int?)null;
-        using var formulario = new ProveedoresForm(proveedores);
-        formulario.ShowDialog(this);
+        navegacion.Abrir<ProveedoresForm>(this);
         CargarProveedores(proveedorId);
         CargarProductos();
     }

@@ -1,6 +1,6 @@
 using AccesoDatos.Contexto;
-using AccesoDatos.Repositorios;
-using AccesoDatos.Servicios;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using StockVentas.WinForms.Formularios;
 
 namespace StockVentas.WinForms;
@@ -13,15 +13,17 @@ internal static class Program
         ApplicationConfiguration.Initialize();
         try
         {
-            ConfiguracionBaseDatos.Inicializar();
-            var productos = new ProductoRepositorio(ConfiguracionBaseDatos.CrearContexto);
-            var proveedores = new ProveedorRepositorio(ConfiguracionBaseDatos.CrearContexto);
-            var productoServicio = new ProductoServicio(productos, proveedores);
-            var proveedorServicio = new ProveedorServicio(proveedores);
-            var clienteServicio = new ClienteServicio(new ClienteRepositorio(ConfiguracionBaseDatos.CrearContexto));
-            var ventaServicio = new VentaServicio(new VentaRepositorio(ConfiguracionBaseDatos.CrearContexto));
-            var reporteServicio = new ReporteServicio(new ReporteRepositorio(ConfiguracionBaseDatos.CrearContexto));
-            Application.Run(new PrincipalForm(productoServicio, proveedorServicio, clienteServicio, ventaServicio, reporteServicio));
+            var servicios = new ServiceCollection();
+            servicios.AgregarAplicacion();
+            using var contenedor = servicios.BuildServiceProvider(new ServiceProviderOptions
+            {
+                ValidateOnBuild = true,
+                ValidateScopes = true
+            });
+            ConfiguracionBaseDatos.Inicializar(
+                contenedor.GetRequiredService<IDbContextFactory<StockVentasDbContext>>());
+            using var ambitoPrincipal = contenedor.CreateScope();
+            Application.Run(ambitoPrincipal.ServiceProvider.GetRequiredService<PrincipalForm>());
         }
         catch (Exception error)
         {

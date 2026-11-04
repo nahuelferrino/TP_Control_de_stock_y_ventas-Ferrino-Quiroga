@@ -1,19 +1,20 @@
+using AccesoDatos.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AccesoDatos.Contexto;
 using AccesoDatos.Modelos;
 
 namespace AccesoDatos.Repositorios;
 
-public class ClienteRepositorio
+public class ClienteRepositorio : IClienteRepositorio
 {
-    private readonly Func<StockVentasDbContext> crearContexto;
+    private readonly IDbContextFactory<StockVentasDbContext> fabricaContextos;
 
-    public ClienteRepositorio(Func<StockVentasDbContext> crearContexto)
-        => this.crearContexto = crearContexto;
+    public ClienteRepositorio(IDbContextFactory<StockVentasDbContext> fabricaContextos)
+        => this.fabricaContextos = fabricaContextos;
 
     public List<Cliente> Consultar(bool incluirInactivos = false)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var consulta = contexto.Clientes.AsNoTracking().AsQueryable();
         if (!incluirInactivos) consulta = consulta.Where(c => c.Activo);
         return consulta.OrderBy(c => c.Apellido).ThenBy(c => c.Nombre).ThenBy(c => c.Id).ToList();
@@ -21,14 +22,14 @@ public class ClienteRepositorio
 
     public void Agregar(Cliente cliente)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         contexto.Clientes.Add(cliente);
         contexto.SaveChanges();
     }
 
     public void Modificar(Cliente cliente)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var existente = contexto.Clientes.Find(cliente.Id)
             ?? throw new InvalidOperationException("El cliente ya no existe.");
         if (!existente.Activo)
@@ -42,7 +43,7 @@ public class ClienteRepositorio
 
     public void DarDeBaja(int id)
     {
-        using var contexto = crearContexto();
+        using var contexto = fabricaContextos.CreateDbContext();
         var cliente = contexto.Clientes.Find(id)
             ?? throw new InvalidOperationException("El cliente ya no existe.");
         if (!cliente.Activo) throw new InvalidOperationException("El cliente ya está dado de baja.");

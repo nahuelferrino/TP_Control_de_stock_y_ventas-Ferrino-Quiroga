@@ -1,13 +1,13 @@
 using AccesoDatos.Reportes;
-using AccesoDatos.Repositorios;
+using AccesoDatos.Interfaces;
 
 namespace AccesoDatos.Servicios;
 
-public class ReporteServicio
+public class ReporteServicio : IReporteServicio
 {
-    private readonly ReporteRepositorio reportes;
+    private readonly IReporteRepositorio reportes;
 
-    public ReporteServicio(ReporteRepositorio reportes) => this.reportes = reportes;
+    public ReporteServicio(IReporteRepositorio reportes) => this.reportes = reportes;
 
     public List<StockBajoFila> StockBajo() => reportes.StockBajo();
     public List<InventarioCategoriaFila> InventarioCategoria() => reportes.InventarioCategoria();

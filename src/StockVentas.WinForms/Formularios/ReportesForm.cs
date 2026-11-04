@@ -1,12 +1,12 @@
 using AccesoDatos.Reportes;
-using AccesoDatos.Servicios;
+using AccesoDatos.Interfaces;
 
 namespace StockVentas.WinForms.Formularios;
 
 public class ReportesForm : Form
 {
-    private readonly ReporteServicio reportes;
-    private readonly ClienteServicio clientes;
+    private readonly IReporteServicio reportes;
+    private readonly IClienteServicio clientes;
     private readonly ComboBox tipo = new() { DropDownStyle = ComboBoxStyle.DropDownList };
     private readonly ComboBox cliente = new() { DropDownStyle = ComboBoxStyle.DropDownList };
     private readonly DateTimePicker desde = new() { Format = DateTimePickerFormat.Short, Value = DateTime.Today.AddDays(-30) };
@@ -15,7 +15,7 @@ public class ReportesForm : Form
     private readonly Label descripcion = new() { Dock = DockStyle.Fill, AutoSize = true };
     private readonly Label estado = new() { Dock = DockStyle.Fill, AutoSize = true, ForeColor = ElementosInterfaz.Azul };
 
-    public ReportesForm(ReporteServicio reportes, ClienteServicio clientes)
+    public ReportesForm(IReporteServicio reportes, IClienteServicio clientes)
     {
         this.reportes = reportes; this.clientes = clientes;
         Text = "Stock y Ventas — Reportes";

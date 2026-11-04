@@ -1,5 +1,8 @@
+using AccesoDatos.Interfaces;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AccesoDatos.Configuracion;
 using AccesoDatos.Contexto;
 using AccesoDatos.Modelos;
 using AccesoDatos.Repositorios;
@@ -18,14 +21,17 @@ internal static partial class Program
         var carpeta = Path.Combine(Path.GetTempPath(), "StockVentasPruebas-" + Guid.NewGuid());
         Directory.CreateDirectory(carpeta);
         var ruta = Path.Combine(carpeta, "pruebas.db");
-        var opciones = new DbContextOptionsBuilder<StockVentasDbContext>()
-            .UseSqlite(new SqliteConnectionStringBuilder { DataSource = ruta, ForeignKeys = true }.ToString()).Options;
-        StockVentasDbContext CrearContexto() => new(opciones);
+        var registros = new ServiceCollection();
+        registros.AgregarAccesoDatos(opciones => opciones.UseSqlite(
+            new SqliteConnectionStringBuilder { DataSource = ruta, ForeignKeys = true }.ToString()));
+        using var contenedor = registros.BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
+        using var ambito = contenedor.CreateScope();
+        var fabrica = contenedor.GetRequiredService<IDbContextFactory<StockVentasDbContext>>();
+        StockVentasDbContext CrearContexto() => fabrica.CreateDbContext();
 
-        var proveedorRepositorio = new ProveedorRepositorio(CrearContexto);
-        var productoRepositorio = new ProductoRepositorio(CrearContexto);
-        var proveedores = new ProveedorServicio(proveedorRepositorio);
-        var productos = new ProductoServicio(productoRepositorio, proveedorRepositorio);
+        var productoRepositorio = ambito.ServiceProvider.GetRequiredService<IProductoRepositorio>();
+        var proveedores = ambito.ServiceProvider.GetRequiredService<IProveedorServicio>();
+        var productos = ambito.ServiceProvider.GetRequiredService<IProductoServicio>();
         var proveedor = new Proveedor { Nombre = "  Distribuidora de prueba  ", Email = "contacto@example.com" };
         var producto = new Producto
         {
@@ -40,7 +46,8 @@ internal static partial class Program
             {
                 using var contexto = CrearContexto();
                 contexto.Database.Migrate();
-                Verificar(contexto.Database.GetAppliedMigrations().Single().EndsWith("InitialCreate"));
+                Verificar(contexto.Database.GetAppliedMigrations().Any(m => m.EndsWith("InitialCreate")));
+                Verificar(contexto.Database.GetAppliedMigrations().SequenceEqual(contexto.Database.GetMigrations()));
                 Verificar(File.Exists(ruta) && new FileInfo(ruta).Length > 0);
                 Verificar(contexto.Productos.Count() == 0 && contexto.Proveedores.Count() == 0
                     && contexto.Clientes.Count() == 0 && contexto.Usuarios.Count() == 0
@@ -51,7 +58,7 @@ internal static partial class Program
             {
                 using var contexto = CrearContexto();
                 contexto.Database.Migrate();
-                Verificar(contexto.Database.GetAppliedMigrations().Count() == 1);
+                Verificar(contexto.Database.GetAppliedMigrations().SequenceEqual(contexto.Database.GetMigrations()));
             });
             Probar("Alta de proveedor y persistencia en un contexto nuevo", () =>
             {
@@ -250,9 +257,10 @@ internal static partial class Program
                 contexto.Database.Migrate();
                 Verificar(contexto.Productos.Count() == 1 && contexto.Proveedores.Count() == 1
                     && contexto.Ventas.Count() == 1 && contexto.Calificaciones.Count() == 1);
-                Verificar(contexto.Database.GetAppliedMigrations().Count() == 1);
+                Verificar(contexto.Database.GetAppliedMigrations().SequenceEqual(contexto.Database.GetMigrations()));
             });
             EjecutarPruebasEtapa3(carpeta);
+            EjecutarPruebasEtapa4(carpeta);
         }
         finally
         {

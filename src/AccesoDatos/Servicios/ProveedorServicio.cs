@@ -1,14 +1,14 @@
 using System.Net.Mail;
 using AccesoDatos.Modelos;
-using AccesoDatos.Repositorios;
+using AccesoDatos.Interfaces;
 
 namespace AccesoDatos.Servicios;
 
-public class ProveedorServicio
+public class ProveedorServicio : IProveedorServicio
 {
-    private readonly ProveedorRepositorio proveedores;
+    private readonly IProveedorRepositorio proveedores;
 
-    public ProveedorServicio(ProveedorRepositorio proveedores) => this.proveedores = proveedores;
+    public ProveedorServicio(IProveedorRepositorio proveedores) => this.proveedores = proveedores;
 
     public List<Proveedor> Consultar(bool incluirInactivos = false)
         => proveedores.Consultar(incluirInactivos);

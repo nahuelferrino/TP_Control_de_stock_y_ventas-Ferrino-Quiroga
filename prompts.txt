@@ -90,3 +90,25 @@ Ante la consulta de la IA sobre implementar solo reportes de productos y proveed
 o incorporar también clientes y ventas, el grupo seleccionó esta respuesta:
 
 Incluir clientes y ventas: versión más completa
+
+13. PLANIFICACIÓN DE LA ETAPA 4
+------------------------------
+Bueno chat, me dieron el ok de la etapa 3 por lo que podemos proseguir con las consignas de la etapa 4. Para la misma quiero que cambiemos la metodologia. Ya que las consignas son las siguientes:
+
+Etapa 4 — Inyección de dependencias.
+
+Fecha: 04-11-26
+
+1. Generar la inyección de dependencias.
+
+Quiero que me expliques todo lo que debes hacer antes de tocar codigo
+
+14. IMPLEMENTACIÓN Y MATERIAL PARA LA EXPOSICIÓN
+-----------------------------------------------
+Me parece bien. Hacé todo lo que dijiste que querías hacer o que debías hacer, mejor dicho. Y de paso explícame después de vuelta qué hiciste para ya tener un pre y post. Así cuando tenga que exponer la presentación el martes que viene, no estoy en bolas. De paso hacé eso. Después de darme el post, generame un Word donde me expliques más o menos la estructura del código, cómo está distribuido y demás cosas que sean relevantes o creás vos con las consignas que te di que sean relevantes en una pregunta posible de la presentación del martes.
+
+15. REVISIÓN CONTRA EL MATERIAL DE LOS PROFESORES
+----------------------------------------------
+Material proporcionado: Inyección de dependencias en .NET.pdf
+
+Bueno Chat, por las dudas esta es la parte de teoría que nos dieron sobre inyección de dependencias. No sé si querés revisar que por lo menos coincida algo, por lo menos los tipos de nombres que ponen los profes, cosas así. Así queda mejor. No sé, me parece a mí que si queda más acorde a lo que nos enseñaron los profesores puede quedar bueno. No te digo que esté mal o bien. Te estoy diciendo que revises y en caso de que no coincida o sea muy poca la coincidencia, realizar los cambios correspondientes.

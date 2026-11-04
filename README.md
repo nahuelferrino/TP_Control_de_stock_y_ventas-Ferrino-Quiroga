@@ -150,3 +150,20 @@ Esta versión funciona como una aplicación local sin inicio de sesión: las ven
 Se mantiene la biblioteca **AccesoDatos**, el proyecto **StockVentas.WinForms** y el esquema existente; esta etapa no necesita una migración adicional.
 
 Ver la [guía de la Etapa 3](docs/Etapa3.md) para los filtros, las validaciones y un recorrido de demostración con resultados esperados. Los comandos de compilación, ejecución y pruebas son los mismos de la Etapa 2.
+
+### Etapa 4 — Inyección de dependencias
+
+La aplicación utiliza el contenedor `Microsoft.Extensions.DependencyInjection`. Los repositorios y servicios se registran en `AccesoDatos/Configuracion/ConfiguracionServicios.cs`; los formularios y la navegación, en `StockVentas.WinForms/ConfiguracionAplicacion.cs`.
+
+Siguiendo el material de clase, los contratos se definen en `AccesoDatos/Interfaces`, con nombres como `IProductoServicio` e `IProductoRepositorio`. Las clases implementan esos contratos y los formularios y servicios los solicitan por constructor. El contenedor relaciona cada interfaz con su implementación, por ejemplo `AddScoped<IProductoServicio, ProductoServicio>()`. `Program.cs` inicia esta configuración mediante `AgregarAplicacion()`.
+
+- Los servicios y repositorios son **Scoped**: se comparten dentro del ámbito de una ventana.
+- Los formularios son **Transient**: cada apertura crea una ventana nueva dentro de su propio ámbito.
+- `NavegacionFormularios` es **Singleton** y crea un ámbito por apertura, que se libera al cerrar el formulario.
+- La fábrica `IDbContextFactory<StockVentasDbContext>` es compartida. Cada operación crea su propio contexto y lo libera con `using`.
+
+`Program.cs` configura y valida el contenedor, aplica las migraciones existentes y solicita el formulario principal. La fábrica de diseño para `dotnet ef` utiliza la misma configuración de SQLite. Se mantienen las entidades, el esquema, los reportes y las validaciones.
+
+Ver la [explicación del antes y el después y la guía de la Etapa 4](docs/Etapa4.md). Las pruebas se ejecutan con el mismo comando de las etapas anteriores e incluyen comprobaciones del contenedor y de sus tiempos de vida.
+
+Para preparar la exposición, se incluye la [guía de estudio en Word](docs/Guia_exposicion_Etapa4.docx), con la estructura del código, ejemplos de los recorridos principales y posibles preguntas con respuestas.

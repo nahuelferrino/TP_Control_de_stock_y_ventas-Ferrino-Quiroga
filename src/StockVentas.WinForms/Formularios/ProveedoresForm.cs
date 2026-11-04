@@ -1,11 +1,11 @@
 using AccesoDatos.Modelos;
-using AccesoDatos.Servicios;
+using AccesoDatos.Interfaces;
 
 namespace StockVentas.WinForms.Formularios;
 
 public class ProveedoresForm : Form
 {
-    private readonly ProveedorServicio proveedores;
+    private readonly IProveedorServicio proveedores;
     private readonly TextBox nombre = new() { MaxLength = 100 };
     private readonly TextBox telefono = new() { MaxLength = 30 };
     private readonly TextBox email = new() { MaxLength = 150 };
@@ -18,7 +18,7 @@ public class ProveedoresForm : Form
     private int proveedorId;
     private bool actualizandoGrilla;
 
-    public ProveedoresForm(ProveedorServicio proveedores)
+    public ProveedoresForm(IProveedorServicio proveedores)
     {
         this.proveedores = proveedores;
         Text = "Stock y Ventas — Proveedores";

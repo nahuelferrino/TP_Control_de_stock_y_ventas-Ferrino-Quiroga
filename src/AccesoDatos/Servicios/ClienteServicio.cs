@@ -1,14 +1,14 @@
 using System.Net.Mail;
 using AccesoDatos.Modelos;
-using AccesoDatos.Repositorios;
+using AccesoDatos.Interfaces;
 
 namespace AccesoDatos.Servicios;
 
-public class ClienteServicio
+public class ClienteServicio : IClienteServicio
 {
-    private readonly ClienteRepositorio clientes;
+    private readonly IClienteRepositorio clientes;
 
-    public ClienteServicio(ClienteRepositorio clientes) => this.clientes = clientes;
+    public ClienteServicio(IClienteRepositorio clientes) => this.clientes = clientes;
 
     public List<Cliente> Consultar(bool incluirInactivos = false) => clientes.Consultar(incluirInactivos);
 

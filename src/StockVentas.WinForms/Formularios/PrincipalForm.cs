@@ -1,11 +1,8 @@
-using AccesoDatos.Servicios;
-
 namespace StockVentas.WinForms.Formularios;
 
 public class PrincipalForm : Form
 {
-    public PrincipalForm(ProductoServicio productos, ProveedorServicio proveedores,
-        ClienteServicio clientes, VentaServicio ventas, ReporteServicio reportes)
+    public PrincipalForm(NavegacionFormularios navegacion)
     {
         Text = "Stock y Ventas";
         StartPosition = FormStartPosition.CenterScreen;
@@ -24,21 +21,20 @@ public class PrincipalForm : Form
         raiz.Controls.Add(titulo, 0, 0);
         raiz.SetColumnSpan(titulo, 2);
         var menu = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, FlowDirection = FlowDirection.TopDown, WrapContents = false };
-        void Seccion(string nombre, Func<Form> crear)
+        void Seccion<TFormulario>(string nombre) where TFormulario : Form
         {
             var boton = ElementosInterfaz.Boton(nombre, (_, _) => ElementosInterfaz.Ejecutar(this, () =>
             {
-                using var formulario = crear();
-                formulario.ShowDialog(this);
+                navegacion.Abrir<TFormulario>(this);
             }), true);
             boton.MinimumSize = new Size(195, 48);
             menu.Controls.Add(boton);
         }
-        Seccion("Productos", () => new ProductosForm(productos, proveedores));
-        Seccion("Proveedores", () => new ProveedoresForm(proveedores));
-        Seccion("Clientes", () => new ClientesForm(clientes));
-        Seccion("Ventas", () => new VentasForm(productos, clientes, ventas));
-        Seccion("Reportes", () => new ReportesForm(reportes, clientes));
+        Seccion<ProductosForm>("Productos");
+        Seccion<ProveedoresForm>("Proveedores");
+        Seccion<ClientesForm>("Clientes");
+        Seccion<VentasForm>("Ventas");
+        Seccion<ReportesForm>("Reportes");
         menu.Controls.Add(ElementosInterfaz.Boton("Salir", (_, _) => Close()));
         raiz.Controls.Add(menu, 0, 1);
         var bienvenida = new Label

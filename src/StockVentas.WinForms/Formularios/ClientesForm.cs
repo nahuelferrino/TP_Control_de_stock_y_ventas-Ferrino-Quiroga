@@ -1,11 +1,11 @@
 using AccesoDatos.Modelos;
-using AccesoDatos.Servicios;
+using AccesoDatos.Interfaces;
 
 namespace StockVentas.WinForms.Formularios;
 
 public class ClientesForm : Form
 {
-    private readonly ClienteServicio clientes;
+    private readonly IClienteServicio clientes;
     private readonly TextBox nombre = new() { MaxLength = 100 };
     private readonly TextBox apellido = new() { MaxLength = 100 };
     private readonly TextBox telefono = new() { MaxLength = 30 };
@@ -18,7 +18,7 @@ public class ClientesForm : Form
     private int clienteId;
     private bool actualizandoGrilla;
 
-    public ClientesForm(ClienteServicio clientes)
+    public ClientesForm(IClienteServicio clientes)
     {
         this.clientes = clientes;
         Text = "Stock y Ventas — Clientes";

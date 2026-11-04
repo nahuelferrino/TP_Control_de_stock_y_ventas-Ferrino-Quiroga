@@ -1,9 +1,9 @@
 using AccesoDatos.Modelos;
-using AccesoDatos.Repositorios;
+using AccesoDatos.Interfaces;
 
 namespace AccesoDatos.Servicios;
 
-public class ProductoServicio
+public class ProductoServicio : IProductoServicio
 {
     private static readonly string[] categoriasIniciales =
     {
@@ -11,10 +11,10 @@ public class ProductoServicio
         "Librería", "Limpieza", "Otros"
     };
 
-    private readonly ProductoRepositorio productos;
-    private readonly ProveedorRepositorio proveedores;
+    private readonly IProductoRepositorio productos;
+    private readonly IProveedorRepositorio proveedores;
 
-    public ProductoServicio(ProductoRepositorio productos, ProveedorRepositorio proveedores)
+    public ProductoServicio(IProductoRepositorio productos, IProveedorRepositorio proveedores)
     {
         this.productos = productos;
         this.proveedores = proveedores;
