@@ -21,20 +21,19 @@ public class PrincipalForm : Form
         raiz.Controls.Add(titulo, 0, 0);
         raiz.SetColumnSpan(titulo, 2);
         var menu = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, FlowDirection = FlowDirection.TopDown, WrapContents = false };
-        void Seccion<TFormulario>(string nombre) where TFormulario : Form
+        void Seccion(string nombre, Action abrir)
         {
-            var boton = ElementosInterfaz.Boton(nombre, (_, _) => ElementosInterfaz.Ejecutar(this, () =>
-            {
-                navegacion.Abrir<TFormulario>(this);
-            }), true);
+            var boton = ElementosInterfaz.Boton(nombre,
+                (_, _) => ElementosInterfaz.Ejecutar(this, abrir), true);
             boton.MinimumSize = new Size(195, 48);
             menu.Controls.Add(boton);
         }
-        Seccion<ProductosForm>("Productos");
-        Seccion<ProveedoresForm>("Proveedores");
-        Seccion<ClientesForm>("Clientes");
-        Seccion<VentasForm>("Ventas");
-        Seccion<ReportesForm>("Reportes");
+        // Cada botón conserva su propia acción y el formulario concreto que debe abrir.
+        Seccion("Productos", () => navegacion.Abrir<ProductosForm>(this));
+        Seccion("Proveedores", () => navegacion.Abrir<ProveedoresForm>(this));
+        Seccion("Clientes", () => navegacion.Abrir<ClientesForm>(this));
+        Seccion("Ventas", () => navegacion.Abrir<VentasForm>(this));
+        Seccion("Reportes", () => navegacion.Abrir<ReportesForm>(this));
         menu.Controls.Add(ElementosInterfaz.Boton("Salir", (_, _) => Close()));
         raiz.Controls.Add(menu, 0, 1);
         var bienvenida = new Label
